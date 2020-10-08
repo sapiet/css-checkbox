@@ -1,0 +1,107 @@
+body {
+	padding: 100px 0 0 100px;
+	background: #eee;
+}
+
+$checkboxSize: 40px;
+$halfCheckboxSize: $checkboxSize / 2;
+$innerCheckboxSize: $checkboxSize - 10px;
+$halfInnerCheckboxSize: $innerCheckboxSize / 2;
+$animationDuration: .8s;
+
+.checkbox-container {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 10px;
+
+	&,
+	.checkbox-out {
+		width: $checkboxSize;
+		height: $checkboxSize;
+	}
+
+	input[type="checkbox"] {
+		display: none;
+	}
+
+	.checkbox-out,
+	.checkbox-in,
+	.checkbox-in-checked {
+		border-radius: 50%;
+	}
+
+	.checkbox-out {
+		box-sizing: border-box;
+		border: solid 1px #8E8E8E;
+		background-color: white;
+		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .2);
+	}
+
+	input[type="checkbox"]:checked ~ .checkbox-out {
+		border-color: transparent;
+	}
+
+	.checkbox-in,
+	.checkbox-in-checked {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -$halfInnerCheckboxSize 0 0 (-$halfInnerCheckboxSize);
+		width: $innerCheckboxSize;
+		height: $innerCheckboxSize;
+
+		&.checkbox-in {
+			background: #F2F4F4;
+		}
+
+		&.checkbox-in-checked {
+			background-image: linear-gradient(#3EB4C9, #3187B8);
+			text-align: center;
+			transform: scale(0);
+			transition: transform $animationDuration / 10 ease-in-out;
+
+			&:after {
+				font-family: FontAwesome;
+				content: "\f00c";
+				line-height: $innerCheckboxSize;
+				color: white;
+			}
+		}
+	}
+
+	input[type="checkbox"]:checked ~ .checkbox-in-checked {
+		transform: scale(1);
+	}
+
+	.checkbox-ripple {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 100%;
+		height: 100%;
+		background: rgba(255, 255, 255, .8);
+		transform: translate3d(-50%, -50%, 0) scale(0);
+		border-radius: 50%;
+		z-index: -1;
+	}
+
+	input[type="checkbox"]:checked ~ .checkbox-ripple {
+	    animation-name: checkbox-ripple;
+	    animation-duration: $animationDuration;
+	}
+}
+
+@keyframes checkbox-ripple {
+    0% {
+    	transform: translate3d(-50%, -50%, 0) scale(1);
+    	opacity: 1;
+   	}
+    40% {
+    	opacity: 1;
+   	}
+    100% {
+    	transform: translate3d(-50%, -50%, 0) scale(1.5);
+    	opacity: 0;
+   	}
+}
